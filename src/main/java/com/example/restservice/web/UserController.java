@@ -3,11 +3,13 @@ package com.example.restservice.web;
 import com.example.restservice.model.User;
 import com.example.restservice.repository.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping(value = "/rest/user", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -20,14 +22,20 @@ public class UserController {
     }
 
 
-    @PostMapping("/save")
-    public int save(@RequestBody User user) {
+    @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public int save(@Valid @RequestBody User user) {
         return crudUserRepository.save(user).getId();
     }
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable int id) {
-        return crudUserRepository.findById(id).orElseThrow();
+        return crudUserRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable int id) {
+        crudUserRepository.deleteById(id);
     }
 }
 

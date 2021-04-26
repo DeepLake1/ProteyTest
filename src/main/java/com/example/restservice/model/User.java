@@ -2,7 +2,7 @@ package com.example.restservice.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.Nullable;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -31,7 +31,7 @@ public class User {
 
     @Column(name = "phone_number", nullable = false, unique = true)
     @NotBlank(message = "Please enter your phone number")
-    @Pattern(regexp="/(?:(?:\\+?1\\s*(?:[.-]\\s*)?)?(?:(\\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]\u200C\u200B)\\s*)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\\s*(?:[.-]\\s*)?)([2-9]1[02-9]\u200C\u200B|[2-9][02-9]1|[2-9][02-9]{2})\\s*(?:[.-]\\s*)?([0-9]{4})\\s*(?:\\s*(?:#|x\\.?|ext\\.?|extension)\\s*(\\d+)\\s*)?$/i", message = "Phone number must be in +79********* format")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "Not valid phone number")
     private String phone_number;
 
     @Enumerated(EnumType.STRING)
@@ -57,7 +57,6 @@ public class User {
     public void setId(int id) {
         this.id = id;
     }
-
 
     public Status getStatus() {
         return status;
