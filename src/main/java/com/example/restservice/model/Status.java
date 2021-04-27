@@ -1,3 +1,4 @@
+/*
 package com.example.restservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -15,11 +16,18 @@ import java.util.Date;
 
 @Entity
 @Table(name = "user_status")
-public class Status extends AbstractBaseEntity {
+public class Status {
+    public static final int START_SEQ = 100000;
+
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    protected int id;
 
     @OneToOne
     @MapsId
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @Enumerated(EnumType.STRING)
@@ -29,7 +37,6 @@ public class Status extends AbstractBaseEntity {
     @Column(name = "status_last_time_changed", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
     private Date lastTimeStatusChanged;
-
 
 
     public Status() {
@@ -60,4 +67,16 @@ public class Status extends AbstractBaseEntity {
         return user;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
+*/

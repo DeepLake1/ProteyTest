@@ -14,8 +14,13 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class User extends AbstractBaseEntity {
+public class User {
+    public static final int START_SEQ = 100000;
 
+    @Id
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    protected int id;
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Please enter your name")
@@ -39,9 +44,10 @@ public class User extends AbstractBaseEntity {
         @Column(name = "status")
         private StatusType statusType;*/
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+/*    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
-    private Status status;
+    @JsonManagedReference
+    private Status status;*/
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
@@ -50,18 +56,25 @@ public class User extends AbstractBaseEntity {
 
 
     public User() {
-        this.status = new Status(StatusType.ONLINE, new Date());
+//        this.status = new Status(StatusType.ONLINE, new Date());
         this.registered = new Date();
     }
 
-
-    public Status getStatus() {
-        return status;
+    public int getId() {
+        return id;
     }
 
-    public void setStatus(Status statusType) {
-        this.status = statusType;
+    public void setId(int id) {
+        this.id = id;
     }
+
+//    public Status getStatus() {
+//        return status;
+//    }
+
+//    public void setStatus(Status statusType) {
+//        this.status = statusType;
+//    }
 
     public Date getRegistered() {
         return registered;
