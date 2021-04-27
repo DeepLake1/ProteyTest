@@ -39,7 +39,8 @@ public class User extends AbstractBaseEntity {
         @Column(name = "status")
         private StatusType statusType;*/
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private Status status;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")

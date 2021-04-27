@@ -20,6 +20,7 @@ CREATE TABLE user_status
     user_id INTEGER NOT NULL,
     status_type  VARCHAR,
     status_last_time_changed  TIMESTAMP,
-    CONSTRAINT user_roles_idx UNIQUE (user_id, status_type),
-    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+    CONSTRAINT fk_user
+        FOREIGN KEY(user_id)
+            REFERENCES users(id)
 );

@@ -17,8 +17,9 @@ import java.util.Date;
 @Table(name = "user_status")
 public class Status extends AbstractBaseEntity {
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false, unique = true)
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
