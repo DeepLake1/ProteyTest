@@ -16,8 +16,10 @@ CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE user_status
 (
+    id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     user_id INTEGER NOT NULL,
-    status  VARCHAR,
-    CONSTRAINT user_roles_idx UNIQUE (user_id, status),
+    status_type  VARCHAR,
+    status_last_time_changed  TIMESTAMP,
+    CONSTRAINT user_roles_idx UNIQUE (user_id, status_type),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );

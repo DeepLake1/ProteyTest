@@ -10,13 +10,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "users")
-public class User {
-    public static final int START_SEQ = 100000;
+public class User extends AbstractBaseEntity {
 
-    @Id
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    protected int id;
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Please enter your name")
@@ -34,10 +29,14 @@ public class User {
     @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "Not valid phone number")
     private String phone_number;
 
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_status", joinColumns = @JoinColumn(name = "user_id"),
-            uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "status"}, name = "user_roles_unique_idx")})
-    @Column(name = "status")
+    /*    @Enumerated(EnumType.STRING)
+        @CollectionTable(name = "user_status", joinColumns = @JoinColumn(name = "user_id"),
+                uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "status"}, name = "user_roles_unique_idx")})
+        @Column(name = "status")
+        private StatusType statusType;*/
+
+    @OneToOne
+    @JoinColumn(name = "id")
     private Status status;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
@@ -47,23 +46,17 @@ public class User {
 
 
     public User() {
+        this.status = new Status(StatusType.ONLINE, new Date());
         this.registered = new Date();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(Status statusType) {
+        this.status = statusType;
     }
 
     public Date getRegistered() {

@@ -5,6 +5,7 @@ import com.example.restservice.repository.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,6 +32,11 @@ public class UserController {
     public User getUser(@PathVariable int id) {
         return crudUserRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
     }
+/*
+    @Scheduled(fixedRate = 1500)
+    public void testScheduled() {
+        System.out.println("WTFFFFF" + System.currentTimeMillis());
+    }*/
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
