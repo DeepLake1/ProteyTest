@@ -1,6 +1,10 @@
 package com.example.restservice.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -13,17 +17,19 @@ import java.util.Date;
 @Table(name = "user_status")
 public class Status extends AbstractBaseEntity {
 
+    @OneToOne(optional = false)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false, unique = true)
+    private User user;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status_type", nullable = false)
-    @NotBlank(message = "Enter your Status")
     private StatusType statusType;
 
     @Column(name = "status_last_time_changed", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
     private Date lastTimeStatusChanged;
 
-    @OneToOne(mappedBy = "status")
-    private User user;
+
 
     public Status() {
     }

@@ -1,7 +1,11 @@
 package com.example.restservice.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -35,8 +39,7 @@ public class User extends AbstractBaseEntity {
         @Column(name = "status")
         private StatusType statusType;*/
 
-    @OneToOne
-    @JoinColumn(name = "id")
+    @OneToOne(mappedBy = "user")
     private Status status;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
