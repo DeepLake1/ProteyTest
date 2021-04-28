@@ -10,6 +10,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -52,12 +53,12 @@ public class User {
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Date registered;
+    private LocalDateTime registered;
 
 
     public User() {
-        this.status = new Status(StatusType.ONLINE, new Date());
-        this.registered = new Date();
+        this.status = new Status(StatusType.ONLINE, LocalDateTime.now());
+        this.registered = LocalDateTime.now();
     }
 
     public int getId() {
@@ -76,11 +77,11 @@ public class User {
         this.status = statusType;
     }
 
-    public Date getRegistered() {
+    public LocalDateTime getRegistered() {
         return registered;
     }
 
-    public void setRegistered(Date registered) {
+    public void setRegistered(LocalDateTime registered) {
         this.registered = registered;
     }
 

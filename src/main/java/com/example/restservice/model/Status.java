@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -35,13 +36,13 @@ public class Status {
 
     @Column(name = "status_last_time_changed", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
-    private Date lastTimeStatusChanged;
+    private LocalDateTime lastTimeStatusChanged;
 
 
     public Status() {
     }
 
-    public Status(StatusType statusType, Date lastTimeStatusChanged) {
+    public Status(StatusType statusType, LocalDateTime lastTimeStatusChanged) {
         this.statusType = statusType;
         this.lastTimeStatusChanged = lastTimeStatusChanged;
     }
@@ -54,11 +55,11 @@ public class Status {
         this.statusType = statusType;
     }
 
-    public Date getLastTimeStatusChanged() {
+    public LocalDateTime getLastTimeStatusChanged() {
         return lastTimeStatusChanged;
     }
 
-    public void setLastTimeStatusChanged(Date lastTimeStatusChanged) {
+    public void setLastTimeStatusChanged(LocalDateTime lastTimeStatusChanged) {
         this.lastTimeStatusChanged = lastTimeStatusChanged;
     }
 

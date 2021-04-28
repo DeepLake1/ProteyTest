@@ -18,8 +18,8 @@ CREATE TABLE user_status
 (
     id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
     user_id INTEGER NOT NULL,
-    status_type  VARCHAR,
-    status_last_time_changed  TIMESTAMP,
+    status_type  VARCHAR NOT NULL,
+    status_last_time_changed  TIMESTAMP NOT NULL,
     CONSTRAINT fk_user
         FOREIGN KEY(user_id)
             REFERENCES users(id)

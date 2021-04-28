@@ -1,8 +1,10 @@
 package com.example.restservice.web;
 
+import com.example.restservice.model.Status;
 import com.example.restservice.model.StatusType;
 import com.example.restservice.model.User;
 import com.example.restservice.repository.CrudUserRepository;
+import com.example.restservice.util.StatusChangingUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,6 +12,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,10 +39,17 @@ public class UserController {
         return crudUserRepository.findById(id).
                 orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
     }
+
     @PostMapping("/{id}")
-    public User updateUserAndStatus(@PathVariable int id, @RequestParam("status") StatusType statusType ) {
-        return crudUserRepository.findById(id).
+    public String updateUserAndStatus(@PathVariable int id, @RequestParam("status") StatusType statusType) {
+        User user = crudUserRepository.findById(id).
                 orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
+        Status userStatus = user.getStatus();
+        StatusType oldStatusType = userStatus.getStatusType();
+        userStatus.setStatusType(statusType);
+        userStatus.setLastTimeStatusChanged(LocalDateTime.now());
+        crudUserRepository.flush();
+        return "{ User : " + user.getId() + ", OldStatus : " + oldStatusType + ", NewStatus : " + statusType + " }";
     }
 
 /*
