@@ -16,11 +16,11 @@ CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 CREATE TABLE user_status
 (
-    id          INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
-    user_id INTEGER NOT NULL,
-    status_type  VARCHAR NOT NULL,
-    status_last_time_changed  TIMESTAMP NOT NULL,
+    id                       INTEGER PRIMARY KEY DEFAULT nextval('global_seq'),
+    user_id                  INTEGER,
+    status_type              VARCHAR,
+    status_last_time_changed TIMESTAMP,
     CONSTRAINT fk_user
-        FOREIGN KEY(user_id)
-            REFERENCES users(id)
+        FOREIGN KEY (user_id)
+            REFERENCES users (id)
 );

@@ -1,4 +1,4 @@
-package com.example.restservice.web;
+package com.example.restservice.web.controllers;
 
 import com.example.restservice.model.Status;
 import com.example.restservice.model.StatusType;
@@ -31,6 +31,7 @@ public class UserController {
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public int save(@Valid @RequestBody User user) {
+        System.out.println("f");
         return crudUserRepository.save(user).getId();
     }
 
@@ -49,7 +50,7 @@ public class UserController {
         userStatus.setStatusType(statusType);
         userStatus.setLastTimeStatusChanged(LocalDateTime.now());
         crudUserRepository.flush();
-        return "{ User : " + user.getId() + ", OldStatus : " + oldStatusType + ", NewStatus : " + statusType + " }";
+        return "{ 'User' : " + user.getId() + ", 'OldStatus' : " + oldStatusType + ", 'NewStatus' : " + statusType + " }";
     }
 
     @DeleteMapping("/{id}")

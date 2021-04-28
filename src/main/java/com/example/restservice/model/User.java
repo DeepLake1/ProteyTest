@@ -1,17 +1,14 @@
 package com.example.restservice.model;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +18,7 @@ public class User {
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    @Column(name = "id")
     protected int id;
 
     @Column(name = "name", nullable = false)
@@ -37,7 +35,7 @@ public class User {
     @Column(name = "phone_number", nullable = false, unique = true)
     @NotBlank(message = "Please enter your phone number")
     @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "Not valid phone number")
-    private String phone_number;
+    private String phoneNumber;
 
     /*    @Enumerated(EnumType.STRING)
         @CollectionTable(name = "user_status", joinColumns = @JoinColumn(name = "user_id"),
@@ -48,6 +46,7 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     @JsonManagedReference
+    @JsonIgnore
     private Status status;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
@@ -64,7 +63,7 @@ public class User {
     public User(String name, String email, String phoneNumber, LocalDateTime registered, Status status) {
         this.name = name;
         this.email = email;
-        this.phone_number = phoneNumber;
+        this.phoneNumber = phoneNumber;
         this.registered = registered;
         this.status = status;
     }
@@ -109,11 +108,11 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(String phoneNumber) {
-        this.phone_number = phoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
