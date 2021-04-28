@@ -23,14 +23,9 @@ public class Status {
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    @Column(name = "id")
+    @Column(name = "user_id", updatable = false, nullable = false)
     protected int id;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    @JsonBackReference
-    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status_type", nullable = false)
@@ -65,10 +60,6 @@ public class Status {
         this.lastTimeStatusChanged = lastTimeStatusChanged;
     }
 
-    public User getUser() {
-        return user;
-    }
-
     public int getId() {
         return id;
     }
@@ -77,7 +68,4 @@ public class Status {
         this.id = id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

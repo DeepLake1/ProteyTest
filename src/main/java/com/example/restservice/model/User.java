@@ -44,9 +44,9 @@ public class User {
         @Column(name = "status")
         private StatusType statusType;*/
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
-    @JsonManagedReference
-//    @JsonIgnore
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", unique = true)
+    @JsonIgnore
     private Status status;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
@@ -56,8 +56,7 @@ public class User {
 
 
     public User() {
-//        this.status = new Status(StatusType.ONLINE, LocalDateTime.now());
-
+        this.status = new Status(StatusType.ONLINE, LocalDateTime.now());
         this.registered = LocalDateTime.now();
     }
 
@@ -77,7 +76,7 @@ public class User {
         this.id = id;
     }
 
-//    @JsonIgnore
+    @JsonIgnore
     public Status getStatus() {
         return status;
     }
@@ -85,6 +84,7 @@ public class User {
     public void setStatus(Status status) {
         this.status = status;
     }
+
     public LocalDateTime getRegistered() {
         return registered;
     }
