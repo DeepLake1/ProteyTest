@@ -13,11 +13,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
-    public static final int START_SEQ = 100000;
 
     @Id
-    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     protected int id;
 
@@ -44,7 +42,6 @@ public class User {
         private StatusType statusType;*/
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
     @JsonManagedReference
     @JsonIgnore
     private Status status;
@@ -56,7 +53,8 @@ public class User {
 
 
     public User() {
-        this.status = new Status(StatusType.ONLINE, LocalDateTime.now());
+//        this.status = new Status(StatusType.ONLINE, LocalDateTime.now());
+
         this.registered = LocalDateTime.now();
     }
 
