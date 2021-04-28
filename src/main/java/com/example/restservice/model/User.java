@@ -46,6 +46,7 @@ public class User {
     @JsonIgnore
     private Status status;
 
+    @JsonIgnore
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
