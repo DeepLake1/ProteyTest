@@ -9,6 +9,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,12 @@ public class UserExceptionHandler {
     protected ResponseEntity<UserException> handleDuplicateCredentials(DataIntegrityViolationException ex) {
         UserException apiError = new UserException("Wrong Credentials", new String[]{findCauseUsingPlainJava(ex).toString()}, HttpStatus.CONFLICT);
         return new ResponseEntity<>(apiError, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler({ConversionFailedException.class, MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<UserException> handleConversionEx(RuntimeException ex) {
+        UserException apiError = new UserException("Invalid status. Please enter status 'ONLINE', 'OFFLINE' or 'AWAY'", new String[]{ex.getMessage()}, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({NoSuchElementException.class, EmptyResultDataAccessException.class})

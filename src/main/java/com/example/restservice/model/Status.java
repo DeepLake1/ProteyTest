@@ -1,4 +1,3 @@
-/*
 package com.example.restservice.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -79,4 +78,3 @@ public class Status {
         this.user = user;
     }
 }
-*/

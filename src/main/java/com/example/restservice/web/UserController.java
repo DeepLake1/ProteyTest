@@ -1,5 +1,6 @@
 package com.example.restservice.web;
 
+import com.example.restservice.model.StatusType;
 import com.example.restservice.model.User;
 import com.example.restservice.repository.CrudUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,15 @@ public class UserController {
 
     @GetMapping("/{id}")
     public User getUser(@PathVariable int id) {
-        return crudUserRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
+        return crudUserRepository.findById(id).
+                orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
     }
+    @PostMapping("/{id}")
+    public User updateUserAndStatus(@PathVariable int id, @RequestParam("status") StatusType statusType ) {
+        return crudUserRepository.findById(id).
+                orElseThrow(() -> new NoSuchElementException("User with id: " + id + " not found"));
+    }
+
 /*
     @Scheduled(fixedRate = 1500)
     public void testScheduled() {

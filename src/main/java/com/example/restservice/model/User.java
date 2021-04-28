@@ -44,10 +44,10 @@ public class User {
         @Column(name = "status")
         private StatusType statusType;*/
 
-/*    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @PrimaryKeyJoinColumn
     @JsonManagedReference
-    private Status status;*/
+    private Status status;
 
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
@@ -56,7 +56,7 @@ public class User {
 
 
     public User() {
-//        this.status = new Status(StatusType.ONLINE, new Date());
+        this.status = new Status(StatusType.ONLINE, new Date());
         this.registered = new Date();
     }
 
@@ -68,13 +68,13 @@ public class User {
         this.id = id;
     }
 
-//    public Status getStatus() {
-//        return status;
-//    }
+    public Status getStatus() {
+        return status;
+    }
 
-//    public void setStatus(Status statusType) {
-//        this.status = statusType;
-//    }
+    public void setStatus(Status statusType) {
+        this.status = statusType;
+    }
 
     public Date getRegistered() {
         return registered;
