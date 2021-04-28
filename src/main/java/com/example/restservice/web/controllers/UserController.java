@@ -50,7 +50,7 @@ public class UserController {
         userStatus.setStatusType(statusType);
         userStatus.setLastTimeStatusChanged(LocalDateTime.now());
         crudUserRepository.flush();
-        return "{ 'User' : " + user.getId() + ", 'OldStatus' : " + oldStatusType + ", 'NewStatus' : " + statusType + " }";
+        return "{ 'User' : '" + user.getId() + "', 'OldStatus' : '" + oldStatusType + "', 'NewStatus' : '" + statusType + "' }";
     }
 
     @DeleteMapping("/{id}")

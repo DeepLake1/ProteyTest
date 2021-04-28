@@ -45,7 +45,7 @@ public class User {
         private StatusType statusType;*/
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", unique = true)
+    @MapsId
     @JsonIgnore
     private Status status;
 

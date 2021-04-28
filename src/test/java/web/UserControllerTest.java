@@ -20,19 +20,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @SpringBootTest(classes = ProteyTestApplication.class)
 @AutoConfigureMockMvc
+@Transactional
 class UserControllerTest {
-
+    private final String restURL = "/rest/user";
     @Autowired
     private MockMvc mockMvc;
 
     @Test
     public void getUserWith200() throws Exception {
-        this.mockMvc.perform(get("/rest/user/100000").contentType(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get(restURL + "/90000").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -41,25 +43,29 @@ class UserControllerTest {
 
     @Test
     public void getUserWith404() throws Exception {
-        this.mockMvc.perform(get("/rest/user/99999").contentType(MediaType.APPLICATION_JSON))
+        this.mockMvc.perform(get(restURL + "/99999").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
-
     @Test
     public void saveUser() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
         User testUser = new User("TestUser", "mail22@gmail.com", "9811508555", LocalDateTime.now(), new Status(StatusType.ONLINE, LocalDateTime.now()));
-        String jsonTestUser = objectMapper.writer().writeValueAsString(testUser);
-        ResultActions result =
-                this.mockMvc.perform(post("/rest/user/save", jsonTestUser).contentType(MediaType.APPLICATION_JSON))
-                        .andDo(print())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andExpect(status().isOk());
-        System.out.println("ff");
+        String jsonTestUser = new ObjectMapper().writer().writeValueAsString(testUser);
+        this.mockMvc.perform(post(restURL + "/save").contentType(MediaType.APPLICATION_JSON).content(jsonTestUser))
+                .andDo(print())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void statusGetAndChange() throws Exception {
+        this.mockMvc.perform(post(restURL + "/90000")
+                .requestAttr("status", "ONLINE")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
 
