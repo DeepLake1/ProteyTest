@@ -20,7 +20,7 @@ public class StatusChangingUtil {
         this.crudUserRepository = crudUserRepository;
     }
 
-    @Scheduled(fixedRate = 30000L)
+//    @Scheduled(fixedRate = 30000L)
     public void updateUsersStatus() {
         long updateRateInMinutes = 5L;
         List<User> users = crudUserRepository.findAll();

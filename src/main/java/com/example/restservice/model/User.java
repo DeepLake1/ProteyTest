@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
+    public static final int START_SEQ = 100000;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     @Column(name = "id")
     protected int id;
 
@@ -23,6 +25,7 @@ public class User {
     @NotBlank(message = "Please enter your name")
     @Size(max = 250)
     private String name;
+
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -41,12 +44,11 @@ public class User {
         @Column(name = "status")
         private StatusType statusType;*/
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.ALL})
     @JsonManagedReference
-    @JsonIgnore
+//    @JsonIgnore
     private Status status;
 
-    @JsonIgnore
     @Column(name = "registered", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -75,14 +77,14 @@ public class User {
         this.id = id;
     }
 
+//    @JsonIgnore
     public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Status statusType) {
-        this.status = statusType;
+    public void setStatus(Status status) {
+        this.status = status;
     }
-
     public LocalDateTime getRegistered() {
         return registered;
     }

@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public int save(@Valid @RequestBody User user) {
-        System.out.println("f");
+        user.setStatus(new Status(StatusType.ONLINE,LocalDateTime.now()));
         return crudUserRepository.save(user).getId();
     }
 
