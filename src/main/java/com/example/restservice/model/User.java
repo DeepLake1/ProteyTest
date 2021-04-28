@@ -61,6 +61,14 @@ public class User {
         this.registered = LocalDateTime.now();
     }
 
+    public User(String name, String email, String phoneNumber, LocalDateTime registered, Status status) {
+        this.name = name;
+        this.email = email;
+        this.phone_number = phoneNumber;
+        this.registered = registered;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
