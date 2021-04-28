@@ -35,7 +35,7 @@ public class User {
 
     @Column(name = "phone_number", nullable = false, unique = true)
     @NotBlank(message = "Please enter your phone number")
-    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$", message = "Not valid phone number")
+    @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$", message = "Not valid phone number. Please enter phone number in +79********* format")
     private String phoneNumber;
 
     /*    @Enumerated(EnumType.STRING)

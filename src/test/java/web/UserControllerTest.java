@@ -5,8 +5,7 @@ import com.example.restservice.model.Status;
 import com.example.restservice.model.StatusType;
 import com.example.restservice.model.User;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,10 +61,17 @@ class UserControllerTest {
 
     @Test
     public void statusGetAndChange() throws Exception {
-        this.mockMvc.perform(post(restURL + "/90000")
-                .requestAttr("status", "ONLINE")
+        this.mockMvc.perform(post(restURL + "/90000").param("status", "ONLINE")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+    @Test
+    public  void deleteUser() throws Exception {
+        this.mockMvc.perform(delete(restURL + "/90000")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent());
+
+
     }
 
 
