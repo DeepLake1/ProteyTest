@@ -52,12 +52,6 @@ public class UserController {
         return "{ User : " + user.getId() + ", OldStatus : " + oldStatusType + ", NewStatus : " + statusType + " }";
     }
 
-/*
-    @Scheduled(fixedRate = 1500)
-    public void testScheduled() {
-        System.out.println("WTFFFFF" + System.currentTimeMillis());
-    }*/
-
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable int id) {
