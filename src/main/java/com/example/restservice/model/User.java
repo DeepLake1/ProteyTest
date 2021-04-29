@@ -16,16 +16,15 @@ public class User {
     public static final int START_SEQ = 100000;
 
     @Id
+    @JsonIgnore
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-    @Column(name = "id")
     protected int id;
 
     @Column(name = "name", nullable = false)
     @NotBlank(message = "Please enter your name")
     @Size(max = 250)
     private String name;
-
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
@@ -37,12 +36,6 @@ public class User {
     @NotBlank(message = "Please enter your phone number")
     @Pattern(regexp = "^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$", message = "Not valid phone number. Please enter phone number in +79********* format")
     private String phoneNumber;
-
-    /*    @Enumerated(EnumType.STRING)
-        @CollectionTable(name = "user_status", joinColumns = @JoinColumn(name = "user_id"),
-                uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "status"}, name = "user_roles_unique_idx")})
-        @Column(name = "status")
-        private StatusType statusType;*/
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @MapsId
@@ -68,10 +61,12 @@ public class User {
         this.status = status;
     }
 
+    @JsonIgnore
     public int getId() {
         return id;
     }
 
+    @JsonIgnore
     public void setId(int id) {
         this.id = id;
     }
