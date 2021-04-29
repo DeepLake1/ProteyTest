@@ -5,11 +5,14 @@ import com.example.restservice.model.StatusType;
 import com.example.restservice.model.User;
 import com.example.restservice.repository.CrudUserRepository;
 import com.example.restservice.util.StatusChangingUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.validation.Valid;
 import java.sql.Timestamp;

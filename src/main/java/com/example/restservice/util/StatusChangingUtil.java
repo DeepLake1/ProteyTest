@@ -21,7 +21,7 @@ public class StatusChangingUtil {
     }
 
     //Updating status in db every 30 sec
-    @Scheduled(fixedRate = 30000L)
+    @Scheduled(fixedDelay = 30000L)
     public void updateUsersStatus() {
         long updateRateInMinutes = 5L;
         List<User> users = crudUserRepository.findAll();
