@@ -4,11 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.ConversionFailedException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -19,13 +15,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.NoHandlerFoundException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.lang.model.type.ErrorType;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -68,7 +60,7 @@ public class UserExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<UserException> defaultErrorHandler(HttpServletRequest req, Exception ex) throws Exception {
+    public ResponseEntity<UserException> defaultErrorHandler(HttpServletRequest req, Exception ex) {
         UserException apiError = new UserException("Error", new String[]{ex.getMessage()}, HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(apiError, HttpStatus.INTERNAL_SERVER_ERROR);
     }

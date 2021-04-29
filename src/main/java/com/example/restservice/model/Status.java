@@ -1,19 +1,10 @@
 package com.example.restservice.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.lang.Nullable;
 
+import org.springframework.lang.Nullable;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Entity
 @Table(name = "user_status")
@@ -34,7 +25,6 @@ public class Status {
     @Column(name = "status_last_time_changed", nullable = false, columnDefinition = "timestamp default now()")
     @Nullable
     private LocalDateTime lastTimeStatusChanged;
-
 
     public Status() {
     }

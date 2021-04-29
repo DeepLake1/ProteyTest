@@ -18,7 +18,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -28,6 +27,7 @@ import java.time.LocalDateTime;
 @Transactional
 class UserControllerTest {
     private final String restURL = "/rest/user";
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -65,14 +65,11 @@ class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
+
     @Test
-    public  void deleteUser() throws Exception {
+    public void deleteUser() throws Exception {
         this.mockMvc.perform(delete(restURL + "/90000")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent());
-
-
     }
-
-
 }

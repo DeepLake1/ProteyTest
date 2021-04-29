@@ -4,21 +4,12 @@ import com.example.restservice.model.Status;
 import com.example.restservice.model.StatusType;
 import com.example.restservice.model.User;
 import com.example.restservice.repository.CrudUserRepository;
-import com.example.restservice.util.StatusChangingUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -31,10 +22,9 @@ public class UserController {
         this.crudUserRepository = crudUserRepository;
     }
 
-
     @PostMapping(value = "/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public int save(@Valid @RequestBody User user) {
-        user.setStatus(new Status(StatusType.ONLINE,LocalDateTime.now()));
+        user.setStatus(new Status(StatusType.ONLINE, LocalDateTime.now()));
         return crudUserRepository.save(user).getId();
     }
 
